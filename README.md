@@ -7,3 +7,8 @@
 4. Проверить подключение http://localhost:15672/
 логин:  guest
 пароль: guest
+
+5. Для нового пользователя:
+rabbitmqctl add_user username password
+rabbitmqctl set_user_tags userTag
+rabbitmqctl set_permissions admin ".*" ".*" ".*"
