@@ -1,4 +1,8 @@
 # RabbitMQ_Learning
+
+Код адаптирован из книги "RabbitMQ Essentials" - David Dossot.
+Репозиторий с примерами на Java: https://github.com/tolyo/rabbitmq-essentials/tree/master
+
 1. Установить erlang https://www.erlang.org/downloads
 2. Скачать и запустить инсталлер https://www.rabbitmq.com/docs/download
 3. Подключить плагины.
