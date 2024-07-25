@@ -1,7 +1,6 @@
 ﻿#nullable disable
 
 using RabbitMQ.Client;
-using System.Buffers;
 using System.Text;
 
 namespace RabbitMQ_Console.ChannelCallable;
