@@ -16,7 +16,7 @@ internal class RabbitMqManager
 {
     private static ILogger _logger;
     private ConnectionFactory _factory;
-    private static IConnection _connection;
+    private IConnection _connection;
 
     internal RabbitMqManager(ILogger logger, ConnectionFactory factory)
     {
@@ -109,6 +109,29 @@ internal class RabbitMqManager
         try
         {
             return callable.Call(channel, userId, message);
+        }
+        catch (Exception ex)
+        {
+            _logger.Log(LogLevel.Error, $"Failed to run: {callable.GetDescriptioin()} on channel: {channel} >>> {ex.Message}");
+        }
+        finally
+        {
+            CloseChannel(channel);
+        }
+
+        return null;
+    }
+
+    internal T Call_WithTopics<T>(ChannelCallableAbstract<T> callable, int userId, List<string> subscribes = null, List<string> unsubscribes = null, string topic = "", string message = "")
+        where T : class
+    {
+        var channel = CreateChannel();
+
+        if(channel is null) return null;
+
+        try
+        {
+            return callable.Call(channel, userId, subscribes, unsubscribes, topic, message);
         }
         catch (Exception ex)
         {

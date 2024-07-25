@@ -7,7 +7,7 @@ namespace RabbitMQ_Console.ChannelCallable;
 
 internal class FetchUserMessagesChannelCallable : ChannelCallableAbstract<List<string>>
 {
-    private static long _userId = -1;
+    private long _userId = -1;
 
     public override List<string> Call(IModel channel, int userId = -1, string message = "")
     {
@@ -27,6 +27,11 @@ internal class FetchUserMessagesChannelCallable : ChannelCallableAbstract<List<s
         }
 
         return messages;
+    }
+
+    public override List<string> Call(IModel channel, int userId = -1, List<string> subscribes = null, List<string> unsubscribes = null, string topic = "", string message = "")
+    {
+        throw new NotImplementedException();
     }
 
     public override string GetDescriptioin()

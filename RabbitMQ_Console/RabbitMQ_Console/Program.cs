@@ -1,4 +1,5 @@
 ﻿using Microsoft.Extensions.Logging;
+using RabbitMQ_Console.UserMessageManagers;
 
 namespace RabbitMQ_Console;
 
@@ -7,6 +8,11 @@ namespace RabbitMQ_Console;
 /// </remarks>
 internal class Program
 {
+    internal const string USER_INBOXES_EXCHANGE = "user-inboxes";
+    internal const string USER_TOPICS_EXCHANGE = "user-topics";
+    internal const string MESSAGE_CONTENT_TYPE = "application/vnd.ccm.pmsg.v1+json";
+    internal const string MESSAGE_ENCODING = "UTF-8";
+
     static void Main(string[] args)
     {
         ILogger logger = LoggerFactory.Create(builder =>

@@ -1,11 +1,14 @@
 ﻿#nullable disable
 
 using Microsoft.Extensions.Logging;
+using RabbitMQ_Console.UserMessageManagers;
 
 namespace RabbitMQ_Console;
 
 public class UserSimulator
 {
+    private static List<string> _topics = new() { "science", "politics", "sports", "fashion" };
+
     private readonly ILogger _logger;
     private int _userId, _maxUserId;
     private UserMessageManager _userMessageManager;
@@ -21,6 +24,8 @@ public class UserSimulator
     public void Run()
     {
         _userMessageManager.OnUserLogin(_userId);
+        _userMessageManager.OnUserTopicInterestChange(_userId, new() { "science", "politics" }, new());
+
         _logger.Log(LogLevel.Information, $"User login: {_userId}");
 
         var rnd = new Random();
@@ -44,6 +49,14 @@ public class UserSimulator
                         string jsonMessage = $"{addresseeUserId} Greatings! Hello from: {_userId}. Timestamp: {DateTime.Now}";
                         _userMessageManager.SendUserMessage(_userId, jsonMessage);
                     }
+                }
+
+                if (rnd.Next(1, 30) < 5)
+                {
+                    string topic = _topics[rnd.Next(0, 1)];
+
+                    string jsonMessage = $"New content about {topic}. Published by {_userId}. Timestamp: {DateTime.Now}";
+                    _userMessageManager.SendUserMessage(_userId, jsonMessage, topic);
                 }
             }
             catch (Exception ex)
