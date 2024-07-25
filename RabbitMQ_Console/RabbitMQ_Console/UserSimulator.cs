@@ -51,11 +51,12 @@ public class UserSimulator
                     }
                 }
 
-                if (rnd.Next(1, 30) < 5)
+                if (rnd.Next(1, 400) < 5)
                 {
                     string topic = _topics[rnd.Next(0, 1)];
 
                     string jsonMessage = $"New content about {topic}. Published by {_userId}. Timestamp: {DateTime.Now}";
+                    _logger.Log(LogLevel.Information, $"User {_userId} Published new content.");
                     _userMessageManager.SendUserMessage(_userId, jsonMessage, topic);
                 }
             }
