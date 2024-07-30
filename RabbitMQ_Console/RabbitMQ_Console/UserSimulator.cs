@@ -34,6 +34,7 @@ public class UserSimulator
         {
             try
             {
+                //получение сообщений
                 var messages = _userMessageManager.FetchUserMessages(_userId, string.Empty);
                 if (messages is not null)
                 {
@@ -41,6 +42,7 @@ public class UserSimulator
                         _logger.Log(LogLevel.Information, $"User {_userId} recived: {message}");
                 }
 
+                //отправка сообщений
                 if (rnd.Next(1, 200) < 25)
                 {
                     int addresseeUserId = 1 + rnd.Next(_maxUserId);
@@ -51,6 +53,7 @@ public class UserSimulator
                     }
                 }
 
+                //отправка сообщений с топиками
                 if (rnd.Next(1, 400) < 5)
                 {
                     string topic = _topics[rnd.Next(0, 1)];
